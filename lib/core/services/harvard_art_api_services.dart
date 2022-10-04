@@ -15,7 +15,8 @@ class HarvardArtApiServices extends ApiServices {
         'object?',
         queryParameters: {
           'apikey': '9c97e169-23d7-47bf-b66d-68a1664188bd',
-          'size': '50'
+          'size': '20',
+          'q': 'Turkish'
         },
       );
       List<ObjectModel> FetchedData = (response.data['records'] as List)
