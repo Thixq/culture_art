@@ -12,13 +12,16 @@ class ObjectDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HarvardArtApiServices().fetchData().then((value) {
+      models = value;
+    });
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          models = await HarvardArtApiServices().fetchData();
-          model = models[14];
+          model = models[30];
           model.images!.length;
-          debugPrint(model.images![0].baseimageurl);
+          debugPrint(model.images!.length.toString());
         },
       ),
       appBar: AppBar(
@@ -34,7 +37,7 @@ class ObjectDetailView extends StatelessWidget {
                 width: double.infinity,
                 height: 2.5.h,
               ),
-              BuildImagePlaceholder(imageUrl: ''),
+              BuildImagePlaceholder(images: model.images!),
               SizedBox(
                 height: (Constant.kInt / 4).sp,
               ),

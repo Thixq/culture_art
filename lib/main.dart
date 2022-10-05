@@ -1,13 +1,11 @@
 import 'package:culture_art/core/constants/constant.dart';
 import 'package:culture_art/route/routes.dart';
-import 'package:culture_art/view/splash/splash_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(milliseconds: 200));
   runApp(CultureArt());
 }
 

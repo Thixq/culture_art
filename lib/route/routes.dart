@@ -1,6 +1,7 @@
 import 'package:culture_art/view/login/login_view.dart';
 import 'package:culture_art/view/object_detail/object_detail_view.dart';
 import 'package:culture_art/view/onboard/onboard_view.dart';
+import 'package:culture_art/view/register/register_view.dart';
 import 'package:culture_art/view/splash/splash_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ class RouteNames {
   static const String splashView = '/';
   static const String onboardView = '/onboardview';
   static const String loginView = '/loginview';
+  static const String registerView = '/registerview';
   static const String homeView = '/home';
   static const String objectDetialView = '/objectdetialview';
 }
@@ -23,6 +25,8 @@ class Routes {
         return routeIf(settings, OnboardView());
       case RouteNames.loginView:
         return routeIf(settings, LoginView());
+      case RouteNames.registerView:
+        return routeIf(settings, RegisterView());
       case RouteNames.objectDetialView:
         return routeIf(settings, ObjectDetailView());
     }

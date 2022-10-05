@@ -1,32 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:culture_art/core/constants/constant.dart';
+import 'package:culture_art/core/model/object_model.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BuildImagePlaceholder extends StatelessWidget {
-  final String? imageUrl;
-  const BuildImagePlaceholder({required this.imageUrl, Key? key})
-      : super(key: key);
+  final List<Images> images;
+  const BuildImagePlaceholder({
+    Key? key,
+    required this.images,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: Device.orientation == Orientation.portrait ? 40.h : 120.h,
+      height: Device.orientation == Orientation.portrait ? 40.h : 120.h,
       width: 90.w,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
       ),
       child: CarouselSlider.builder(
-        itemCount: 9,
+        itemCount: images.length,
         itemBuilder: (context, index, realIndex) {
-          return Container(
-            child: Image.network(
-                'https://nrs.harvard.edu/urn-3:HUAM:INV017759_dynmc'),
+          return CachedNetworkImage(
+            imageUrl: images[index].baseimageurl!,
+            placeholder: (context, url) => Lottie.asset('assets/unicorn.json'),
           );
         },
-        options: CarouselOptions(disableCenter: true, viewportFraction: 1),
+        options: CarouselOptions(
+            disableCenter: true,
+            viewportFraction: 1,
+            enableInfiniteScroll: false),
       ),
     );
   }

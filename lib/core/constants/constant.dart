@@ -33,6 +33,30 @@ class Constant {
   static SizedBox sizedBox = SizedBox(height: 12.sp);
 
   static ThemeData darkTheme() => ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 32, 32, 32),
+            elevation: 5,
+            minimumSize: Size(275, 45),
+          ),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white70,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red.shade500, width: 1),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.grey.shade500, width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.grey.shade500, width: 2.5),
+          ),
+        ),
         brightness: Brightness.dark,
         primaryColor: Colors.white,
         scaffoldBackgroundColor: const Color(0XFF2f2f2f),
@@ -64,6 +88,30 @@ class Constant {
       );
 
   static ThemeData themeData() => ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 32, 32, 32),
+            elevation: 0,
+            minimumSize: Size(275, 45),
+          ),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black87,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red.shade500, width: 1),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.black87, width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.black87, width: 2.5),
+          ),
+        ),
         brightness: Brightness.light,
         primaryColor: Color(0xff1c1c1c),
         appBarTheme: AppBarTheme(color: Colors.grey.shade300),

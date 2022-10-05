@@ -128,11 +128,11 @@ class People {
   People({this.role, this.gender, this.culture, this.name, this.personid});
 
   People.fromJson(Map<String, dynamic> json) {
-    role = json['role'] ?? null;
-    gender = json['gender'] ?? null;
-    culture = json['culture'] ?? null;
-    name = json['name'] ?? null;
-    personid = json['personid'] ?? null;
+    role = json['role'] ?? '';
+    gender = json['gender'] ?? '';
+    culture = json['culture'] ?? '';
+    name = json['name'] ?? '';
+    personid = json['personid'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -152,7 +152,8 @@ class Images {
   Images({this.baseimageurl});
 
   Images.fromJson(Map<String, dynamic> json) {
-    baseimageurl = json['baseimageurl'];
+    baseimageurl = json['baseimageurl'] ??
+        'https://tandoorvietnam.com/wp-content/uploads/woocommerce-placeholder-600x600.png';
   }
 
   Map<String, dynamic> toJson() {

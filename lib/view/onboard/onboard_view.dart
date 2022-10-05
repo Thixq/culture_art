@@ -76,7 +76,7 @@ class _OnboardViewState extends State<OnboardView> {
               ? GestureDetector(
                   onTap: () {
                     Navigator.pushNamedAndRemoveUntil(
-                        context, RouteNames.objectDetialView, (route) => false);
+                        context, RouteNames.loginView, (route) => false);
                   },
                   child: Container(
                     height: 27.sp,
