@@ -39,7 +39,9 @@ class BuildImagePlaceholder extends StatelessWidget {
 }
 
 class BuildColorPaletteView extends StatelessWidget {
-  const BuildColorPaletteView({Key? key}) : super(key: key);
+  const BuildColorPaletteView({required this.colorPallete, Key? key})
+      : super(key: key);
+  final List<ColorPalette> colorPallete;
 
   @override
   Widget build(BuildContext context) {
@@ -52,20 +54,23 @@ class BuildColorPaletteView extends StatelessWidget {
           child: ScrollConfiguration(
             behavior: ScrollBehavior().copyWith(overscroll: false),
             child: ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(
-                width: Constant.kInt / 8,
-              ),
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: 15,
-              itemBuilder: (context, index) => Container(
-                width: Constant.kInt.toDouble(),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
+                separatorBuilder: (context, index) => SizedBox(
+                      width: Constant.kInt / 8,
+                    ),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: colorPallete.length,
+                itemBuilder: (context, index) {
+                  int? color = int.tryParse(
+                      '0XFF${colorPallete[index].color!.substring(1)}');
+                  return Container(
+                    width: Constant.kInt.toDouble(),
+                    decoration: BoxDecoration(
+                      color: Color(color!),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  );
+                }),
           ),
         ),
         Container(
@@ -88,7 +93,9 @@ class BuildColorPaletteView extends StatelessWidget {
 }
 
 class BuildInfoWidget extends StatelessWidget {
-  const BuildInfoWidget({Key? key}) : super(key: key);
+  const BuildInfoWidget({required this.objectModel, Key? key})
+      : super(key: key);
+  final ObjectModel objectModel;
 
   @override
   Widget build(BuildContext context) {
@@ -101,41 +108,43 @@ class BuildInfoWidget extends StatelessWidget {
             width: double.infinity,
           ),
           Text(
-            'Artist Name',
+            objectModel.people![0].name!,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           SizedBox(height: 4.sp),
-          Text('Art Name Art Name Art Name Art Name ',
+          Text(objectModel.title!,
               style: Theme.of(context).textTheme.titleMedium,
               maxLines: 2,
               overflow: TextOverflow.ellipsis),
           Constant.sizedBox,
           Text(
-            'Circular tazza on a detachable raised foot chased in high relief with a central medallion inside a husk border depicting Venus and Adonis in a landscape flanked by a putto and three hounds in repoussé; the border chased with four roundels containing putti representing the Four Elements interspersed with a variety of fruits and vegetables also in high relief against a matted ground; the detachable raised foot chased with two scenes of musical figures in landscapes interspersed with similar fruits and vegetables; wrigglework border.',
+            objectModel.description!,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.justify,
           ),
           Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Classification', description: 'Prints'),
-          Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Work Type', description: 'print'),
-          Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Technique', description: 'Engraving'),
+          BuildInfoDetailWidget(
+              title: 'Classification',
+              description: objectModel.classification!),
           Constant.sizedBox,
           BuildInfoDetailWidget(
-              title: 'Division', description: 'European and American Art'),
+              title: 'Work Type',
+              description: objectModel.worktypes![0].worktype!),
           Constant.sizedBox,
           BuildInfoDetailWidget(
-              title: 'Department',
-              description:
-                  'Department of Paintings, Sculpture & Decorative Arts'),
+              title: 'Technique', description: objectModel.technique!),
           Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Date', description: '1993'),
+          BuildInfoDetailWidget(
+              title: 'Division', description: objectModel.division!),
           Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Century', description: '17th century'),
+          BuildInfoDetailWidget(
+              title: 'Department', description: objectModel.department!),
           Constant.sizedBox,
-          BuildInfoDetailWidget(title: 'Culture', description: 'Flemish'),
-          BuildInfoObjectWidget(objectNumber: '2002.34.21'),
+          BuildInfoDetailWidget(title: 'Date', description: objectModel.dated!),
+          Constant.sizedBox,
+          BuildInfoDetailWidget(
+              title: 'Culture', description: objectModel.culture!),
+          BuildInfoObjectWidget(objectNumber: objectModel.objectnumber!),
         ],
       ),
     );

@@ -7,23 +7,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ObjectDetailView extends StatelessWidget {
   ObjectDetailView({Key? key}) : super(key: key);
-  List<ObjectModel> models = [];
-  late ObjectModel model;
 
   @override
   Widget build(BuildContext context) {
-    HarvardArtApiServices().fetchData().then((value) {
-      models = value;
-    });
-
+    ObjectModel _objectModel =
+        (ModalRoute.of(context)!.settings.arguments as ObjectModel);
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          model = models[30];
-          model.images!.length;
-          debugPrint(model.images!.length.toString());
-        },
-      ),
       appBar: AppBar(
         elevation: 0,
       ),
@@ -37,12 +26,12 @@ class ObjectDetailView extends StatelessWidget {
                 width: double.infinity,
                 height: 2.5.h,
               ),
-              BuildImagePlaceholder(images: model.images!),
+              BuildImagePlaceholder(images: _objectModel.images!),
               SizedBox(
                 height: (Constant.kInt / 4).sp,
               ),
-              BuildColorPaletteView(),
-              BuildInfoWidget(),
+              BuildColorPaletteView(colorPallete: _objectModel.colors!),
+              BuildInfoWidget(objectModel: _objectModel),
             ],
           ),
         ),

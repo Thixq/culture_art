@@ -1,3 +1,4 @@
+import 'package:culture_art/view/home/home_view.dart';
 import 'package:culture_art/view/login/login_view.dart';
 import 'package:culture_art/view/object_detail/object_detail_view.dart';
 import 'package:culture_art/view/onboard/onboard_view.dart';
@@ -12,7 +13,7 @@ class RouteNames {
   static const String onboardView = '/onboardview';
   static const String loginView = '/loginview';
   static const String registerView = '/registerview';
-  static const String homeView = '/home';
+  static const String homeView = '/homeview';
   static const String objectDetialView = '/objectdetialview';
 }
 
@@ -27,6 +28,8 @@ class Routes {
         return routeIf(settings, LoginView());
       case RouteNames.registerView:
         return routeIf(settings, RegisterView());
+      case RouteNames.homeView:
+        return routeIf(settings, HomeView());
       case RouteNames.objectDetialView:
         return routeIf(settings, ObjectDetailView());
     }

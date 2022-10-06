@@ -18,8 +18,24 @@ class LoginView extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.center,
-            child: LoginForm(),
+            child: Container(
+              alignment: Alignment.center,
+              height: 100.h,
+              width: 90.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  LoginForm(),
+                  LoginFormButtons(),
+                ],
+              ),
+            ),
           ),
+          Positioned(
+            top: 95.h,
+            left: 30.w,
+            child: registerview(),
+          )
         ],
       ),
     );

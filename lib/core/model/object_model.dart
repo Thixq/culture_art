@@ -10,7 +10,7 @@ class ObjectModel {
   final String? classification;
   final String? department;
   final List<Images>? images;
-  final List<Colors>? colors;
+  final List<ColorPalette>? colors;
   final String? objectnumber;
   final String? technique;
 
@@ -48,26 +48,34 @@ class ObjectModel {
               .toList()
           : [
               People(
-                  culture: '',
-                  gender: '',
-                  name: 'not available',
+                  culture: 'Unknown',
+                  gender: 'Unknown',
+                  name: 'Anonymous',
                   personid: 0,
-                  role: '')
+                  role: 'Unknown')
             ],
       dated: json['dated'] ?? '',
       culture: json['culture'] ?? '',
       classification: json['classification'] ?? '',
       department: json['department'] ?? '',
       images: json['imagecount'] != 0
-          ? (json['images'] as List).map((e) => Images.fromJson(e)).toList()
+          ? ((json['images'] as List).isNotEmpty
+              ? (json['images'] as List).map((e) => Images.fromJson(e)).toList()
+              : [
+                  Images(
+                      baseimageurl:
+                          'https://tandoorvietnam.com/wp-content/uploads/woocommerce-placeholder-600x600.png')
+                ])
           : [
               Images(
                   baseimageurl:
                       'https://tandoorvietnam.com/wp-content/uploads/woocommerce-placeholder-600x600.png')
             ],
       colors: json['colorcount'] != 0
-          ? (json['colors'] as List).map((e) => Colors.fromJson(e)).toList()
-          : [Colors(color: '#ffffff')],
+          ? (json['colors'] as List)
+              .map((e) => ColorPalette.fromJson(e))
+              .toList()
+          : [ColorPalette(color: '#ffffff')],
       objectnumber: json['objectnumber'] ?? '',
       technique: json['technique'] ?? '');
 
@@ -163,12 +171,12 @@ class Images {
   }
 }
 
-class Colors {
+class ColorPalette {
   String? color;
 
-  Colors({this.color});
+  ColorPalette({this.color});
 
-  Colors.fromJson(Map<String, dynamic> json) {
+  ColorPalette.fromJson(Map<String, dynamic> json) {
     color = json['color'];
   }
 

@@ -11,58 +11,86 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: 100.h,
-      width: 90.w,
-      child: Form(
-        key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    'E-Mail',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'E-Mail',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                SizedBox(
-                  height: 5,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                height: 58,
+                child: TextFormField(),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Password',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                SizedBox(
-                  height: 58,
-                  child: TextFormField(),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    'Password',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  height: 58,
-                  child: TextFormField(),
-                ),
-              ],
-            ),
-            LoginFormButtons(),
-          ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              PasswordWidget(),
+            ],
+          ),
+          PasswordReset(),
+        ],
+      ),
+    );
+  }
+}
+
+class PasswordWidget extends StatefulWidget {
+  const PasswordWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<PasswordWidget> createState() => _PasswordWidgetState();
+}
+
+class _PasswordWidgetState extends State<PasswordWidget> {
+  bool isVisibility = true;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 58,
+      child: TextFormField(
+        obscureText: isVisibility,
+        enableSuggestions: false,
+        autocorrect: false,
+        obscuringCharacter: '*',
+        decoration: InputDecoration(
+          suffix: IconButton(
+            onPressed: () {
+              setState(() {
+                isVisibility = !isVisibility;
+              });
+            },
+            icon: Icon(isVisibility ? Icons.visibility_off : Icons.visibility),
+          ),
         ),
       ),
     );
@@ -76,23 +104,11 @@ class LoginFormButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            debugPrint('asd');
-          },
-          child: Container(
-            alignment: Alignment.center,
-            color: Colors.transparent,
-            width: 108,
-            height: 40,
-            child: Text(
-              'Password Reset',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-        ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteNames.homeView, (route) => false);
+          },
           child: const Text('Sign in'),
         ),
         ElevatedButton(
@@ -103,8 +119,32 @@ class LoginFormButtons extends StatelessWidget {
           onPressed: () {},
           child: const Text('Sign in with Apple'),
         ),
-        const registerview(),
       ],
+    );
+  }
+}
+
+class PasswordReset extends StatelessWidget {
+  const PasswordReset({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        debugPrint('asd');
+      },
+      child: Container(
+        alignment: Alignment.center,
+        color: Colors.transparent,
+        width: 108,
+        height: 40,
+        child: Text(
+          'Password Reset',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ),
     );
   }
 }
