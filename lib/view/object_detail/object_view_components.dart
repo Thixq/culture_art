@@ -24,10 +24,16 @@ class BuildImagePlaceholder extends StatelessWidget {
       child: CarouselSlider.builder(
         itemCount: images.length,
         itemBuilder: (context, index, realIndex) {
-          return CachedNetworkImage(
-            imageUrl: images[index].baseimageurl!,
-            placeholder: (context, url) => Lottie.asset('assets/unicorn.json'),
-          );
+          try {
+            return CachedNetworkImage(
+              imageUrl: images[index].baseimageurl!,
+              placeholder: (context, url) =>
+                  Lottie.asset('assets/unicorn.json'),
+            );
+          } catch (e) {
+            return Image.network(
+                'https://tandoorvietnam.com/wp-content/uploads/woocommerce-placeholder-600x600.png');
+          }
         },
         options: CarouselOptions(
             disableCenter: true,

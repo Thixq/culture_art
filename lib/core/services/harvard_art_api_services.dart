@@ -3,7 +3,7 @@ import 'package:culture_art/core/services/api_services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class HarvardArtApiServices extends IApiServices {
+class HarvardArtApiServices extends IApiArtServices {
   Dio dio = Dio(
     BaseOptions(baseUrl: "https://api.harvardartmuseums.org/"),
   );
@@ -16,7 +16,6 @@ class HarvardArtApiServices extends IApiServices {
         queryParameters: {
           'apikey': '9c97e169-23d7-47bf-b66d-68a1664188bd',
           'size': '50',
-          'q': 'Turkish',
           'hasimage': '1',
         },
       );

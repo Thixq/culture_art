@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670342594452",
+    "project_id": "cultureandartapp",
+    "storage_bucket": "cultureandartapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670342594452:android:ba47fe82481a0bb22b9981",
+        "android_client_info": {
+          "package_name": "com.example.culture_art"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670342594452-n551sj23apon3p5sh4oep8qr5jkfd3cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQbCbV0WXRVmyKDM26WnWGANgkOHRoq4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670342594452-n551sj23apon3p5sh4oep8qr5jkfd3cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,13 +1,21 @@
+import 'package:culture_art/core/services/auth_services/firebase_auth_services.dart';
+import 'package:culture_art/core/viewmodel/login_viewmodel/login_cubit.dart';
 import 'package:culture_art/route/routes.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
 
 class LoginForm extends StatelessWidget {
   LoginForm({
     Key? key,
   }) : super(key: key);
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +38,20 @@ class LoginForm extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              SizedBox(
-                height: 58,
-                child: TextFormField(),
+              TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isNotEmpty) {
+                    if (EmailValidator.validate(value)) {
+                      return null;
+                    } else {
+                      return 'Please enter a valid e-mail.';
+                    }
+                  } else {
+                    return 'Please enter your e-mail.';
+                  }
+                },
               ),
             ],
           ),
@@ -75,22 +94,26 @@ class _PasswordWidgetState extends State<PasswordWidget> {
   bool isVisibility = true;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 58,
-      child: TextFormField(
-        obscureText: isVisibility,
-        enableSuggestions: false,
-        autocorrect: false,
-        obscuringCharacter: '*',
-        decoration: InputDecoration(
-          suffix: IconButton(
-            onPressed: () {
-              setState(() {
-                isVisibility = !isVisibility;
-              });
-            },
-            icon: Icon(isVisibility ? Icons.visibility_off : Icons.visibility),
-          ),
+    return TextFormField(
+      controller: passwordController,
+      obscureText: isVisibility,
+      enableSuggestions: false,
+      autocorrect: false,
+      validator: (value) {
+        if (value!.isNotEmpty) {
+          return null;
+        } else {
+          return 'Please enter your password.';
+        }
+      },
+      decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              isVisibility = !isVisibility;
+            });
+          },
+          icon: Icon(isVisibility ? Icons.visibility_off : Icons.visibility),
         ),
       ),
     );
@@ -106,8 +129,10 @@ class LoginFormButtons extends StatelessWidget {
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, RouteNames.homeView, (route) => false);
+            context.read<LoginCubit>().SignIn(
+                formkey: formKey,
+                email: emailController,
+                password: passwordController);
           },
           child: const Text('Sign in'),
         ),
@@ -116,7 +141,13 @@ class LoginFormButtons extends StatelessWidget {
           child: const Text('Sign in with Goolge'),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            FirebaseAuthServices _authServices =
+                FirebaseAuthServices(auth: FirebaseAuth.instance);
+            _authServices.signOut().then((value) {
+              debugPrint(value.toString());
+            });
+          },
           child: const Text('Sign in with Apple'),
         ),
       ],
@@ -132,9 +163,7 @@ class PasswordReset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        debugPrint('asd');
-      },
+      onTap: () {},
       child: Container(
         alignment: Alignment.center,
         color: Colors.transparent,

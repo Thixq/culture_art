@@ -44,6 +44,11 @@ class Constant {
           cursorColor: Colors.white70,
         ),
         inputDecorationTheme: InputDecorationTheme(
+          suffixIconColor: Colors.white,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red.shade500, width: 1),
+          ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.red.shade500, width: 1),
@@ -99,6 +104,11 @@ class Constant {
           cursorColor: Colors.black87,
         ),
         inputDecorationTheme: InputDecorationTheme(
+          suffixIconColor: Colors.black,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red.shade500, width: 2.5),
+          ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.red.shade500, width: 1),
