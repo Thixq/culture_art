@@ -1,16 +1,28 @@
-import 'package:bloc/bloc.dart';
 import 'package:culture_art/core/model/object_model.dart';
 import 'package:culture_art/core/services/harvard_art_api_services.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'home_state.dart';
 
 class HomeViewModelCubit extends Cubit<HomeViewModelState> {
   HomeViewModelCubit() : super(HomeViewModelInitial());
-  HarvardArtApiServices _api = HarvardArtApiServices();
+  final HarvardArtApiServices _api = HarvardArtApiServices();
   int pageIndex = 1;
-  void fetchData() async {
+  bool isFirst = true;
+
+  Map<String, dynamic> query = {
+    'size': '50',
+    'hasimage': '1',
+    'page': '1',
+  };
+  void fetchData({Map<String, dynamic>? newQuery}) async {
+    if (newQuery != null) {
+      query.addAll(newQuery);
+    }
+
+    query.update('page', (value) => pageIndex);
+
     if (state is HomeViewModelLoading) return;
 
     final currentState = state;
@@ -18,13 +30,12 @@ class HomeViewModelCubit extends Cubit<HomeViewModelState> {
     if (currentState is HomeViewModelLoaded) {
       oldObjects = currentState.objects;
     }
-    emit(HomeViewModelLoading(oldObjects, isFirstFetch: pageIndex == 1));
-
-    _api.queryFetchData(query: {
-      'size': '50',
-      'hasimage': '1',
-      'page': '$pageIndex',
-    }).then((newObjects) {
+    if (pageIndex == 1) {
+      oldObjects = [];
+    }
+    emit(HomeViewModelLoading(oldObjects, isFirstFetch: isFirst));
+    isFirst = false;
+    _api.queryFetchData(query: query).then((newObjects) {
       pageIndex++;
       List<ObjectModel> objects = (state as HomeViewModelLoading).oldObjects;
       objects.addAll(newObjects);

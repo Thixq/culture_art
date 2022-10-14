@@ -1,23 +1,20 @@
 import 'package:culture_art/core/viewmodel/auth_viewmodel/auth_cubit.dart';
-import 'package:culture_art/route/routes.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({
-    Key? key,
-  }) : super(key: key);
+class RegisterForm extends StatelessWidget {
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: loginFormKey,
+      key: registerFormKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +68,6 @@ class LoginForm extends StatelessWidget {
               const PasswordWidget(),
             ],
           ),
-          const PasswordReset(),
         ],
       ),
     );
@@ -117,8 +113,8 @@ class _PasswordWidgetState extends State<PasswordWidget> {
   }
 }
 
-class LoginFormButtons extends StatelessWidget {
-  const LoginFormButtons({Key? key}) : super(key: key);
+class RegisterFormButtons extends StatelessWidget {
+  const RegisterFormButtons({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,81 +122,55 @@ class LoginFormButtons extends StatelessWidget {
       children: <Widget>[
         ElevatedButton(
           onPressed: () {
-            context.read<AuthCubit>().SignIn(
-                formkey: loginFormKey,
+            context.read<AuthCubit>().SignUp(
+                formkey: registerFormKey,
                 email: emailController,
                 password: passwordController);
           },
-          child: const Text('Sign in'),
+          child: const Text('Sign Up'),
         ),
         ElevatedButton(
           onPressed: () {
             context.read<AuthCubit>().GoogleSignIns();
           },
-          child: const Text('Sign in with Goolge'),
+          child: const Text('Sign Up with Goolge'),
         ),
       ],
     );
   }
 }
 
-class PasswordReset extends StatelessWidget {
-  const PasswordReset({
-    Key? key,
-  }) : super(key: key);
+class LoginViewDirection extends StatelessWidget {
+  const LoginViewDirection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context
-            .read<AuthCubit>()
-            .ResetPassword(formkey: loginFormKey, email: emailController);
+        emailController.clear();
+        passwordController.clear();
+        Navigator.pop(context);
       },
       child: Container(
         alignment: Alignment.center,
         color: Colors.transparent,
-        width: 108,
-        height: 40,
-        child: Text(
-          'Password Reset',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
-    );
-  }
-}
-
-class RegisterViewDirection extends StatelessWidget {
-  const RegisterViewDirection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, RouteNames.registerView);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        color: Colors.transparent,
-        width: 200,
+        width: 210,
         height: 20.sp,
         child: RichText(
           text: TextSpan(
-            text: 'Don\'t have an account?',
+            text: 'I already have an account',
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
                 .copyWith(color: Colors.white),
             children: [
               TextSpan(
-                  text: ' sign up',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.blue)),
+                text: ' sign in!',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.blue),
+              ),
             ],
           ),
         ),

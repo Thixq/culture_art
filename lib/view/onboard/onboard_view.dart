@@ -40,7 +40,7 @@ class _OnboardViewState extends State<OnboardView> {
 
   Container _buildBottomNav(BuildContext context) {
     return Container(
-      alignment: Alignment(0, .85),
+      alignment: const Alignment(0, .85),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -92,7 +92,7 @@ class _OnboardViewState extends State<OnboardView> {
               : GestureDetector(
                   onTap: () {
                     _pageController.nextPage(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.ease);
                   },
                   child: Container(
@@ -118,7 +118,7 @@ class _OnboardViewState extends State<OnboardView> {
           isDone = (value == 2);
         });
       },
-      scrollBehavior: ScrollBehavior().copyWith(overscroll: false),
+      scrollBehavior: const ScrollBehavior().copyWith(overscroll: false),
       controller: _pageController,
       children: const [
         OnboardContent(

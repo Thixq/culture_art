@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:culture_art/core/model/object_classification_model.dart';
+import 'package:culture_art/core/model/object_culture_model.dart';
 import 'package:culture_art/core/model/object_model.dart';
 import 'package:culture_art/core/viewmodel/home_viewmodel/home_cubit.dart';
+import 'package:culture_art/core/widgets/CustomDropDown.dart';
 import 'package:culture_art/route/routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,7 +28,6 @@ class _GridLayoutState extends State<GridLayout> {
   late final ScrollController _scrollController;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
@@ -43,7 +46,6 @@ class _GridLayoutState extends State<GridLayout> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _scrollController
       ..dispose()
@@ -140,30 +142,153 @@ class ShimmerLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GridView.custom(
-        gridDelegate: SliverQuiltedGridDelegate(
-          crossAxisCount: 4,
-          mainAxisSpacing: 6,
-          crossAxisSpacing: 6,
-          repeatPattern: QuiltedGridRepeatPattern.inverted,
-          pattern: const [
-            QuiltedGridTile(2, 2),
-            QuiltedGridTile(1, 1),
-            QuiltedGridTile(1, 1),
-            QuiltedGridTile(1, 2),
-          ],
-        ),
-        childrenDelegate: SliverChildBuilderDelegate(
-          childCount: 16,
-          (context, index) => Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.white,
-            child: Container(
-              color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 45,
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.white,
+              child: ListView(
+                padding: EdgeInsets.only(left: 8, right: 8, top: 8),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Container(
+                    width: 150,
+                    child: CustomDropDown(
+                      customDropDownDecoration:
+                          CustomDropDownDecoration(color: Colors.white),
+                      onPressed: (currentIndex, id, value) {},
+                      customDropDownItemList: [],
+                      hintText: '',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    width: 150,
+                    child: CustomDropDown(
+                      customDropDownDecoration:
+                          CustomDropDownDecoration(color: Colors.white),
+                      onPressed: (currentIndex, id, value) {},
+                      customDropDownItemList: [],
+                      hintText: '',
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.custom(
+                gridDelegate: SliverQuiltedGridDelegate(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 6,
+                  crossAxisSpacing: 6,
+                  repeatPattern: QuiltedGridRepeatPattern.inverted,
+                  pattern: const [
+                    QuiltedGridTile(2, 2),
+                    QuiltedGridTile(1, 1),
+                    QuiltedGridTile(1, 1),
+                    QuiltedGridTile(1, 2),
+                  ],
+                ),
+                childrenDelegate: SliverChildBuilderDelegate(
+                  childCount: 16,
+                  (context, index) => Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.white,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FilterBarierWidget extends StatelessWidget {
+  const FilterBarierWidget({
+    Key? key,
+    required this.children,
+  }) : super(key: key);
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 45,
+      child: ScrollConfiguration(
+        behavior: ScrollBehavior().copyWith(overscroll: false),
+        child: ListView(
+          padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+          scrollDirection: Axis.horizontal,
+          children: children,
         ),
       ),
+    );
+  }
+}
+
+class ArtFilters extends StatelessWidget {
+  const ArtFilters({
+    Key? key,
+    required this.classificationList,
+    required this.cultureList,
+  }) : super(key: key);
+
+  final List<ObjectClassificationModel> classificationList;
+  final List<ObjectCultureModel> cultureList;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilterBarierWidget(
+      children: [
+        Container(
+          width: 150,
+          child: CustomDropDown(
+            onPressed: (currentIndex, id, value) {
+              context.read<HomeViewModelCubit>()
+                ..pageIndex = 1
+                ..fetchData(newQuery: {'classification': '$id'});
+            },
+            customDropDownItemList: classificationList
+                .map(
+                  (item) => CustomDropDownItem(title: item.name, id: item.id),
+                )
+                .toList(),
+            hintText: 'Classification',
+          ),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        Container(
+          width: 150,
+          child: CustomDropDown(
+            onPressed: (currentIndex, id, value) {
+              context.read<HomeViewModelCubit>()
+                ..pageIndex = 1
+                ..fetchData(newQuery: {'culture': '$id'});
+            },
+            customDropDownItemList: cultureList
+                .map(
+                  (item) => CustomDropDownItem(title: item.name, id: item.id),
+                )
+                .toList(),
+            hintText: 'Culture',
+          ),
+        ),
+      ],
     );
   }
 }

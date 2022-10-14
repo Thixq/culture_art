@@ -58,9 +58,9 @@ class BuildColorPaletteView extends StatelessWidget {
               ? (Constant.kInt / 8).h
               : (Constant.kInt / 4).h,
           child: ScrollConfiguration(
-            behavior: ScrollBehavior().copyWith(overscroll: false),
+            behavior: const ScrollBehavior().copyWith(overscroll: false),
             child: ListView.separated(
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                       width: Constant.kInt / 8,
                     ),
                 scrollDirection: Axis.horizontal,
@@ -80,7 +80,7 @@ class BuildColorPaletteView extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 4),
+          margin: const EdgeInsets.only(top: 4),
           width: 90.w,
           child: Text(
             'Color Pallete',
@@ -110,7 +110,7 @@ class BuildInfoWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
           ),
           Text(

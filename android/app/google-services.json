@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "670342594452-roqq38lpbsrc9cfaouabfl712ffgdus6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.culture_art",
+            "certificate_hash": "67d6ca79bcee8110d72c176c1eda506f639ae4bf"
+          }
+        },
+        {
           "client_id": "670342594452-n551sj23apon3p5sh4oep8qr5jkfd3cl.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "670342594452-n551sj23apon3p5sh4oep8qr5jkfd3cl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "670342594452-57r89ik5klu5lojvctp4053vkbbn13uf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cultureArt"
+              }
             }
           ]
         }

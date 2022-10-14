@@ -1,19 +1,31 @@
 import 'package:culture_art/core/constants/constant.dart';
 import 'package:culture_art/core/model/object_model.dart';
-import 'package:culture_art/core/services/harvard_art_api_services.dart';
+import 'package:culture_art/core/services/auth_services/firebase_auth_services.dart';
 import 'package:culture_art/view/object_detail/object_view_components.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ObjectDetailView extends StatelessWidget {
-  ObjectDetailView({Key? key}) : super(key: key);
+  const ObjectDetailView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ObjectModel _objectModel =
+    ObjectModel objectModel =
         (ModalRoute.of(context)!.settings.arguments as ObjectModel);
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuthServices authServices =
+                    FirebaseAuthServices(auth: FirebaseAuth.instance);
+                authServices.signOut();
+                GoogleSignIn().signOut();
+              },
+              icon: const Icon(Icons.output_rounded))
+        ],
         elevation: 0,
       ),
       body: ScrollConfiguration(
@@ -26,12 +38,12 @@ class ObjectDetailView extends StatelessWidget {
                 width: double.infinity,
                 height: 2.5.h,
               ),
-              BuildImagePlaceholder(images: _objectModel.images!),
+              BuildImagePlaceholder(images: objectModel.images!),
               SizedBox(
                 height: (Constant.kInt / 4).sp,
               ),
-              BuildColorPaletteView(colorPallete: _objectModel.colors!),
-              BuildInfoWidget(objectModel: _objectModel),
+              BuildColorPaletteView(colorPallete: objectModel.colors!),
+              BuildInfoWidget(objectModel: objectModel),
             ],
           ),
         ),

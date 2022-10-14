@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 part of 'home_cubit.dart';
 
 @immutable
@@ -14,6 +16,7 @@ class HomeViewModelLoading extends HomeViewModelState {
 
 class HomeViewModelLoaded extends HomeViewModelState {
   List<ObjectModel> objects;
+
   HomeViewModelLoaded({required this.objects});
 }
 

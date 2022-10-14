@@ -1,6 +1,7 @@
 import 'package:culture_art/core/constants/constant.dart';
+import 'package:culture_art/core/viewmodel/auth_viewmodel/auth_cubit.dart';
+import 'package:culture_art/core/viewmodel/filter_viewmodel/filter_cubit.dart';
 import 'package:culture_art/core/viewmodel/home_viewmodel/home_cubit.dart';
-import 'package:culture_art/core/viewmodel/login_viewmodel/login_cubit.dart';
 import 'package:culture_art/firebase_options.dart';
 import 'package:culture_art/route/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +21,10 @@ void main() async {
           create: (context) => HomeViewModelCubit(),
         ),
         BlocProvider(
-          create: (context) => LoginCubit(),
+          create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => FilterCubit(),
         ),
       ],
       child: CultureArt(),
@@ -41,6 +45,7 @@ class CultureArt extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: Constant.themeData(),
           themeMode: ThemeMode.dark,
+          //home: Deneme(),
           onGenerateRoute: Routes.generateRoute,
         );
       },

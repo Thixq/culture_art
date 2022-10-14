@@ -21,18 +21,19 @@ class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteNames.splashView:
-        return routeIf(settings, SplashView());
+        return routeIf(settings, const SplashView());
       case RouteNames.onboardView:
-        return routeIf(settings, OnboardView());
+        return routeIf(settings, const OnboardView());
       case RouteNames.loginView:
-        return routeIf(settings, LoginView());
+        return routeIf(settings, const LoginView());
       case RouteNames.registerView:
-        return routeIf(settings, RegisterView());
+        return routeIf(settings, const RegisterView());
       case RouteNames.homeView:
-        return routeIf(settings, HomeView());
+        return routeIf(settings, const HomeView());
       case RouteNames.objectDetialView:
-        return routeIf(settings, ObjectDetailView());
+        return routeIf(settings, const ObjectDetailView());
     }
+    return null;
   }
 
   static Route<dynamic>? routeIf(RouteSettings settings, Widget view) {

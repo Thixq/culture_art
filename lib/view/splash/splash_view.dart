@@ -1,5 +1,5 @@
 import 'package:culture_art/route/routes.dart';
-import 'package:culture_art/view/onboard/onboard_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:lottie/lottie.dart';
@@ -14,22 +14,28 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  late FirebaseAuth _firebaseAuth;
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(duration: Duration(milliseconds: 4000), vsync: this)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, RouteNames.onboardView, (route) => false);
-            }
-          });
+    _firebaseAuth = FirebaseAuth.instance;
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 4000), vsync: this)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          if (_firebaseAuth.currentUser == null) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteNames.onboardView, (route) => false);
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteNames.homeView, (route) => false);
+          }
+        }
+      });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
   }

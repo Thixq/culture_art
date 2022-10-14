@@ -32,13 +32,15 @@ class ObjectModel {
 
   factory ObjectModel.fromJson(Map<String, dynamic> json) => ObjectModel(
       id: json['id'] ?? 0,
-      title: json['title'] ?? 'title not available',
-      description: json['descripton'] ?? 'description not available',
-      division: json['division'] ?? 'not available',
-      worktypes: (json['worktypes'] as List).isNotEmpty
-          ? (json['worktypes'] as List)
-              .map((e) => Worktypes.fromJson(e))
-              .toList()
+      title: json['title'] ?? 'Title not available',
+      description: json['description'] ?? 'Description not available',
+      division: json['division'] ?? 'Not available',
+      worktypes: json.containsKey('worktypes')
+          ? (json['worktypes'] as List).isNotEmpty
+              ? (json['worktypes'] as List)
+                  .map((e) => Worktypes.fromJson(e))
+                  .toList()
+              : [Worktypes(worktypeid: '0', worktype: 'not available')]
           : [Worktypes(worktypeid: '0', worktype: 'not available')],
       people: json['peoplecount'] != 0
           ? (json['people'] as List)
@@ -52,12 +54,12 @@ class ObjectModel {
                   gender: 'Unknown',
                   name: 'Anonymous',
                   personid: 0,
-                  role: 'Unknown')
+                  role: 'Unknown'),
             ],
-      dated: json['dated'] ?? '',
-      culture: json['culture'] ?? '',
-      classification: json['classification'] ?? '',
-      department: json['department'] ?? '',
+      dated: json['dated'] ?? 'Unknown',
+      culture: json['culture'] ?? 'Unknown',
+      classification: json['classification'] ?? 'Unknown',
+      department: json['department'] ?? 'unknown',
       images: json['imagecount'] != 0
           ? ((json['images'] as List).isNotEmpty
               ? (json['images'] as List).map((e) => Images.fromJson(e)).toList()
@@ -80,29 +82,29 @@ class ObjectModel {
       technique: json['technique'] ?? '');
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['division'] = this.division;
-    if (this.worktypes != null) {
-      data['worktypes'] = this.worktypes!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['description'] = description;
+    data['division'] = division;
+    if (worktypes != null) {
+      data['worktypes'] = worktypes!.map((v) => v.toJson()).toList();
     }
-    if (this.people != null) {
-      data['people'] = this.people!.map((v) => v.toJson()).toList();
+    if (people != null) {
+      data['people'] = people!.map((v) => v.toJson()).toList();
     }
-    data['dated'] = this.dated;
-    data['culture'] = this.culture;
-    data['classification'] = this.classification;
-    data['department'] = this.department;
-    if (this.images != null) {
-      data['images'] = this.images!.map((v) => v.toJson()).toList();
+    data['dated'] = dated;
+    data['culture'] = culture;
+    data['classification'] = classification;
+    data['department'] = department;
+    if (images != null) {
+      data['images'] = images!.map((v) => v.toJson()).toList();
     }
-    if (this.colors != null) {
-      data['colors'] = this.colors!.map((v) => v.toJson()).toList();
+    if (colors != null) {
+      data['colors'] = colors!.map((v) => v.toJson()).toList();
     }
-    data['objectnumber'] = this.objectnumber;
-    data['technique'] = this.technique;
+    data['objectnumber'] = objectnumber;
+    data['technique'] = technique;
     return data;
   }
 }
@@ -119,9 +121,9 @@ class Worktypes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['worktypeid'] = this.worktypeid;
-    data['worktype'] = this.worktype;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['worktypeid'] = worktypeid;
+    data['worktype'] = worktype;
     return data;
   }
 }
@@ -144,12 +146,12 @@ class People {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['role'] = this.role;
-    data['gender'] = this.gender;
-    data['culture'] = this.culture;
-    data['name'] = this.name;
-    data['personid'] = this.personid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['role'] = role;
+    data['gender'] = gender;
+    data['culture'] = culture;
+    data['name'] = name;
+    data['personid'] = personid;
     return data;
   }
 }
@@ -165,8 +167,8 @@ class Images {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['baseimageurl'] = this.baseimageurl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['baseimageurl'] = baseimageurl;
     return data;
   }
 }
@@ -181,8 +183,8 @@ class ColorPalette {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['color'] = this.color;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['color'] = color;
     return data;
   }
 }
