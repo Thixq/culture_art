@@ -71,6 +71,7 @@ class Constant {
       );
 
   static ThemeData themeData() => ThemeData(
+        iconTheme: IconThemeData(color: Colors.black),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color.fromARGB(255, 32, 32, 32),

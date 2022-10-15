@@ -162,7 +162,7 @@ class LoginViewDirection extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
-                .copyWith(color: Colors.white),
+                .copyWith(color: Theme.of(context).primaryColor),
             children: [
               TextSpan(
                 text: ' sign in!',

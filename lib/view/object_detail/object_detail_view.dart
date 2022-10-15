@@ -16,15 +16,28 @@ class ObjectDetailView extends StatelessWidget {
         (ModalRoute.of(context)!.settings.arguments as ObjectModel);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           IconButton(
-              onPressed: () {
-                FirebaseAuthServices authServices =
-                    FirebaseAuthServices(auth: FirebaseAuth.instance);
-                authServices.signOut();
-                GoogleSignIn().signOut();
-              },
-              icon: const Icon(Icons.output_rounded))
+            onPressed: () {
+              FirebaseAuthServices authServices =
+                  FirebaseAuthServices(auth: FirebaseAuth.instance);
+              authServices.signOut();
+              GoogleSignIn().signOut();
+            },
+            icon: Icon(
+              Icons.output_rounded,
+              color: Theme.of(context).primaryColor,
+            ),
+          )
         ],
         elevation: 0,
       ),

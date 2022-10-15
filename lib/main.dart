@@ -44,7 +44,7 @@ class CultureArt extends StatelessWidget {
           darkTheme: Constant.darkTheme(),
           debugShowCheckedModeBanner: false,
           theme: Constant.themeData(),
-          themeMode: ThemeMode.system,
+          themeMode: ThemeMode.dark,
           //home: Deneme(),
           onGenerateRoute: Routes.generateRoute,
         );
