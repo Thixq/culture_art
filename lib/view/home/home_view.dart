@@ -50,6 +50,7 @@ class _HomeViewState extends State<HomeView> {
             objectList = state.objects;
           } else if (state is HomeViewModelLoading) {
             objectList = state.oldObjects;
+            Center(child: CircularProgressIndicator());
           }
           return Column(
             children: [
@@ -68,11 +69,8 @@ class _HomeViewState extends State<HomeView> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: state is HomeViewModelLoaded
-                      ? GridLayout(objectList: objectList)
-                      : Center(child: CircularProgressIndicator()),
-                ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: GridLayout(objectList: objectList)),
               ),
             ],
           );
